@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>OData CRUD Demo</title>
+    <link href="Styles/Site.css" rel="stylesheet" type="text/css" />
+    <link type="text/css" rel="Stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css" /> 
+</head>
+<body>
+    
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <h1>
+                    OData CRUD Demo
+                </h1>
+            </div>
+            <div class="loginDisplay"></div>
+            <div class="clear hideSkiplink"></div>
+        </div>
+        <div class="main">
+            <div id="dialog-form" title="Create new Zipcode">
+	            <p class="validateTips">All form fields are required.</p>
+	            <form>
+	            <fieldset>
+                    <label for="_id">Zipcode</label>
+                    <input type="text" name="_id" id="_id" class="text ui-widget-content ui-corner-all" />
+		            <label for="city">City</label>
+		            <input type="text" name="city" id="city" class="text ui-widget-content ui-corner-all" />
+		            <label for="loc">Location</label>
+		            <input type="text" name="loc" id="loc" value="" class="text ui-widget-content ui-corner-all" />
+		            <label for="pop">Population</label>
+		            <input type="text" name="pop" id="pop" value="" class="text ui-widget-content ui-corner-all" />
+                    <label for="state">State</label>
+                    <input type="text" name="state" id="state" value="" class="text ui-widget-content ui-corner-all" />
+                    <div id="loading" style="display:none">Loading...</div>
+	            </fieldset>
+	            </form>
+            </div>
+
+            <div id="zips-contain" class="ui-widget">
+	            <h1>Zipcodes:</h1>
+	            <table id="zips" class="ui-widget ui-widget-content">
+			            <tr class="ui-widget-header ">
+                            <th>Zipcode</th>
+				            <th>City</th>
+				            <th>Location</th>
+                            <th>Population</th>
+				            <th>State</th>
+                            <th>Actions</th>
+			            </tr>
+			            
+	            </table>
+                <button id="create-zip">Create new Zipcode</button>
+                <span id="loadingZips" style="display:none">Loading...</span>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="footer"></div>
+    </div>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.5.1.min.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.13/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="Scripts/datajs-0.0.3.min.js"></script>
+    <!--<script type="text/javascript" src="Scripts/json2.js"></script>-->
+    <script type="text/javascript" src="Scripts/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="Scripts/DataJSCRUD.js"></script>
+    <script type="text/javascript">
+        $(OnPageLoad)
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
