@@ -26,10 +26,10 @@
                     <input type="text" name="_id" id="_id" class="text ui-widget-content ui-corner-all" />
 		            <label for="city">City</label>
 		            <input type="text" name="city" id="city" class="text ui-widget-content ui-corner-all" />
-		            <label for="loc">Location</label>
-		            <input type="text" name="loc" id="loc" value="" class="text ui-widget-content ui-corner-all" />
-		            <label for="pop">Population</label>
-		            <input type="text" name="pop" id="pop" value="" class="text ui-widget-content ui-corner-all" />
+		            <label for="geoloc">Location</label>
+		            <input type="text" name="geoloc" id="geoloc" value="" class="text ui-widget-content ui-corner-all" />
+		            <label for="population">Population</label>
+		            <input type="text" name="population" id="population" value="" class="text ui-widget-content ui-corner-all" />
                     <label for="state">State</label>
                     <input type="text" name="state" id="state" value="" class="text ui-widget-content ui-corner-all" />
                     <div id="loading" style="display:none">Loading...</div>
@@ -38,7 +38,8 @@
             </div>
 
             <div id="zips-contain" class="ui-widget">
-	            <h1>Zipcodes:</h1>
+	            <h1><span style="float:left">Zipcodes: </span></h1>
+                <button id="create-zip" style="float:right;margin:0 0 5px 0">Create new Zipcode</button>
 	            <table id="zips" class="ui-widget ui-widget-content">
 			            <tr class="ui-widget-header ">
                             <th>Zipcode</th>
@@ -50,7 +51,6 @@
 			            </tr>
 			            
 	            </table>
-                <button id="create-zip">Create new Zipcode</button>
                 <span id="loadingZips" style="display:none">Loading...</span>
             </div>
         </div>

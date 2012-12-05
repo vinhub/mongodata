@@ -2,13 +2,12 @@
 var ZIPS_ODATA_SVC = "http://localhost:8088/zipsdb/zips";
 
 //Zip edit form Variables
-// TODO: Population displays as object
 var _id = $("_id"),
     city = $("#city"),
-	loc = $("#loc"),
-	pop = $("#pop"),
+	geoloc = $("#geoloc"),
+	population = $("#population"),
     state = $("#state"),
-    allFields = $([]).add(_id).add(city).add(loc).add(pop).add(state),
+    allFields = $([]).add(_id).add(city).add(geoloc).add(population).add(state),
 	tips = $(".validateTips");
 
 
@@ -54,7 +53,6 @@ function GetZipsCallback(data, request)
 //***********************End: Get Zips***************************
 
 //*****************************Add Zip (CREATE)***************************
-// TODO: Complete this
 //Handle Create Zip button click
 function OpenCreateZipDialog() 
 {
@@ -85,7 +83,9 @@ function OpenCreateZipDialog()
 function AddZip() 
 {
     $("#loading").show();
-    var newZipdata = { _id: $("_id").val(), city: $("#city").val(), loc: $("#loc").val(), pop: $("#pop").val(), state: $("#state").val() };
+
+    // TODO: Handle geoloc array
+    var newZipdata = { _id: $("#_id").val(), city: $("#city").val(), geoloc: $("#geoloc").val(), population: $("#population").val(), state: $("#state").val() };
     var requestOptions = {
         requestUri: ZIPS_ODATA_SVC,
         method: "POST",
@@ -113,7 +113,6 @@ function AddErrorCallback(error)
 //*************************End Add Zip***************************
 
 //*************************Update Zip (UPDATE)***************************
-// TODO: Complete this
 //Handle Update hyper link click
 function OpenUpdateDialog(_id) 
 {
@@ -121,8 +120,8 @@ function OpenUpdateDialog(_id)
     var cells = $("#zipRow" + _id).children("td");
     $("#_id").val(cells.eq(0).text());
     $("#city").val(cells.eq(1).text());
-    $("#loc").val(cells.eq(2).text());
-    $("#pop").val(cells.eq(3).text());
+    $("#geoloc").val(cells.eq(2).text());
+    $("#population").val(cells.eq(3).text());
     $("#state").val(cells.eq(4).text());
 
     $("#dialog-form").dialog("option", "title", "Update Zip");
@@ -152,7 +151,9 @@ function OpenUpdateDialog(_id)
 function UpdateZip(_id) 
 {
     $("#loading").show();
-    var updateZipdata = { _id: $("_id").val(), city: $("#city").val(), loc: $("#loc").val(), pop: $("#pop").val(), state: $("state").val() };
+
+    // TODO: Handle geoloc array
+    var updateZipdata = { _id: $("#_id").val(), city: $("#city").val(), geoloc: $("#geoloc").val(), population: $("#population").val(), state: $("state").val() };
     var requestURI = ZIPS_ODATA_SVC + "(" + _id + ")";
     var requestOptions = {
         requestUri: requestURI,
@@ -210,7 +211,7 @@ function OpenDeleteDialog(_id)
 //Handles DataJS calls for delete zip
 function DeleteZip(_id) 
 {
-    var requestURI = ZIPS_ODATA_SVC + "(" + _id + ")";
+    var requestURI = ZIPS_ODATA_SVC + "('" + _id + "')";
     var requestOptions = {
                             requestUri: requestURI,
                             method: "DELETE",
@@ -241,8 +242,8 @@ function ApplyTemplate(data)
     var template = "<tr id=\"zipRow${_id}\">" +
                             "<td>${_id}</td>" +
 							"<td>${city}</td>" +
-							"<td>${loc}</td>" +
-							"<td>${pop}</td>" +
+							"<td>${geoloc}</td>" +
+							"<td>${population}</td>" +
                             "<td>${state}</td>" +
                             "<td>" +
                                 "<a href=\"javascript:OpenUpdateDialog(${_id})\">Update</a>" +
@@ -262,8 +263,8 @@ function ValidateZipData()
 
 // TODO:
 //    bValid = bValid && checkLength(name, "city", 3, 40);
-//    bValid = bValid && checkLength(loc, "loc", 6, 80);
-//    bValid = bValid && checkLength(pop, "pop", 5, 16);
+//    bValid = bValid && checkLength(geoloc, "geoloc", 6, 80);
+//    bValid = bValid && checkLength(population, "population", 5, 16);
 //    bValid = bValid && checkLength(state, "state", 5, 16);
 
 //    bValid = bValid && checkRegexp(name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter.");
