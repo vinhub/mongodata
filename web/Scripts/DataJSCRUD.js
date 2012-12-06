@@ -2,12 +2,13 @@
 var ZIPS_ODATA_SVC = "http://localhost:8088/zipsdb/zips";
 
 //Zip edit form Variables
-var _id = $("_id"),
+var _id = $("#_id"),
+    zipcode = $("#zipcode"),
     city = $("#city"),
 	geoloc = $("#geoloc"),
 	population = $("#population"),
     state = $("#state"),
-    allFields = $([]).add(_id).add(city).add(geoloc).add(population).add(state),
+    allFields = $([]).add(zipcode).add(city).add(geoloc).add(population).add(state),
 	tips = $(".validateTips");
 
 
@@ -78,6 +79,7 @@ function OpenCreateZipDialog()
                                     );
     
     $("#_id").val('');
+    $("#zipcode").val('');
     $("#city").val('');
     $("#geoloc1").val('');
     $("#geoloc2").val('');
@@ -94,7 +96,7 @@ function AddZip()
 
     var newZipdata = 
     { 
-        _id: $("#_id").val(), 
+        zipcode: $("#zipcode").val(), 
         city: $("#city").val(), 
         geoloc: [parseFloat($("#geoloc1").val()), parseFloat($("#geoloc2").val())], 
         population: $("#population").val(), 
@@ -134,7 +136,7 @@ function OpenUpdateDialog(_id)
     $("#loading").hide();
 
     var cells = $("#zipRow" + _id).children("td");
-    $("#_id").val(cells.eq(0).text());
+    $("#zipcode").val(cells.eq(0).text());
     $("#city").val(cells.eq(1).text());
 
     var geoloc = cells.eq(2).text().split(',');
@@ -173,7 +175,9 @@ function UpdateZip(_id)
     $("#loading").show();
 
     var updateZipdata = 
-    { 
+    {
+        _id: _id, 
+        zipcode: $("#zipcode").val(),
         city: $("#city").val(), 
         geoloc: [parseFloat($("#geoloc1").val()), parseFloat($("#geoloc2").val())], 
         population: $("#population").val(), 
@@ -266,15 +270,15 @@ function DeleteErrorCallback(error)
 function ApplyTemplate(data) 
 {
     var template = "<tr id=\"zipRow${_id}\">" +
-                            "<td>${_id}</td>" +
+                            "<td>${zipcode}</td>" +
 							"<td>${city}</td>" +
 							"<td>${geoloc}</td>" +
 							"<td>${population}</td>" +
                             "<td>${state}</td>" +
                             "<td>" +
-                                "<a href=\"javascript:OpenUpdateDialog(${_id})\">Update</a>" +
+                                "<a href=\"javascript:OpenUpdateDialog('${_id}')\">Update</a>" +
                                 " " +
-                                "<a href=\"javascript:OpenDeleteDialog(${_id})\">Delete</a>" +
+                                "<a href=\"javascript:OpenDeleteDialog('${_id}')\">Delete</a>" +
                             "</td>" +
 						"</tr>";
 

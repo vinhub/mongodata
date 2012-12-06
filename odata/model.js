@@ -1,5 +1,6 @@
 $data.Class.define("zipsdb.zip", $data.Entity, null, {
-    _id: { type: "string", key: true, computed: false, nullable: false },
+    _id: { type: "objectid", key: true, computed: true, nullable: false },
+    zipcode: { type: "string" },
     city: { type: "string" },
     geoloc: { type: "Array", elementType: "number" },
     population: { type: "int" },
