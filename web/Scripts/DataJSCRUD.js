@@ -84,8 +84,15 @@ function AddZip()
 {
     $("#loading").show();
 
-    // TODO: Handle geoloc array
-    var newZipdata = { _id: $("#_id").val(), city: $("#city").val(), geoloc: $("#geoloc").val(), population: $("#population").val(), state: $("#state").val() };
+    var newZipdata = 
+    { 
+        _id: $("#_id").val(), 
+        city: $("#city").val(), 
+        geoloc: [parseFloat($("#geoloc1").val()), parseFloat($("#geoloc2").val())], 
+        population: $("#population").val(), 
+        state: $("#state").val() 
+    };
+
     var requestOptions = {
         requestUri: ZIPS_ODATA_SVC,
         method: "POST",
@@ -120,7 +127,11 @@ function OpenUpdateDialog(_id)
     var cells = $("#zipRow" + _id).children("td");
     $("#_id").val(cells.eq(0).text());
     $("#city").val(cells.eq(1).text());
-    $("#geoloc").val(cells.eq(2).text());
+
+    var geoloc = cells.eq(2).text().split(',');
+    $("#geoloc1").val(geoloc[0]);
+    $("#geoloc2").val(geoloc[1]);
+
     $("#population").val(cells.eq(3).text());
     $("#state").val(cells.eq(4).text());
 
@@ -152,12 +163,18 @@ function UpdateZip(_id)
 {
     $("#loading").show();
 
-    // TODO: Handle geoloc array
-    var updateZipdata = { _id: $("#_id").val(), city: $("#city").val(), geoloc: $("#geoloc").val(), population: $("#population").val(), state: $("state").val() };
-    var requestURI = ZIPS_ODATA_SVC + "(" + _id + ")";
+    var updateZipdata = 
+    { 
+        city: $("#city").val(), 
+        geoloc: [parseFloat($("#geoloc1").val()), parseFloat($("#geoloc2").val())], 
+        population: $("#population").val(), 
+        state: $("#state").val() 
+    };
+
+    var requestURI = ZIPS_ODATA_SVC + "('" + _id + "')";
     var requestOptions = {
         requestUri: requestURI,
-        method: "PUT",
+        method: "MERGE",
         data: updateZipdata
     };
 
