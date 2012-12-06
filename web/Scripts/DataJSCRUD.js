@@ -19,7 +19,7 @@ function OnPageLoad()
 
     $("#dialog-form").dialog({
         autoOpen: false,
-        height: 375,
+        height: 550,
         width: 450,
         modal: true,
         close: function () {
@@ -39,7 +39,7 @@ function OnPageLoad()
 function GetZips() 
 {
     $("#loadingZips").show();
-    OData.read(ZIPS_ODATA_SVC, GetZipsCallback);
+    OData.read(ZIPS_ODATA_SVC + '?t=' + new Date().getTime().toString(), GetZipsCallback);
 }
 
 //GetZips Success Callback
@@ -76,6 +76,14 @@ function OpenCreateZipDialog()
                                                             }
                                                         ]
                                     );
+    
+    $("#_id").val('');
+    $("#city").val('');
+    $("#geoloc1").val('');
+    $("#geoloc2").val('');
+    $("#population").val('');
+    $("#state").val('');
+
     $("#dialog-form").dialog("open");
 }
 
@@ -124,6 +132,7 @@ function AddErrorCallback(error)
 function OpenUpdateDialog(_id) 
 {
     $("#loading").hide();
+
     var cells = $("#zipRow" + _id).children("td");
     $("#_id").val(cells.eq(0).text());
     $("#city").val(cells.eq(1).text());
