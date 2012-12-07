@@ -9,8 +9,10 @@ var _id = $("#_id"),
 	population = $("#population"),
     state = $("#state"),
     allFields = $([]).add(zipcode).add(city).add(geoloc).add(population).add(state),
-	tips = $(".validateTips");
-
+	tips = $(".validateTips"),
+    curPage = 0,
+    entriesPerPage = 20,
+    totalEntries = 0;
 
 //Page Load Actions
 
@@ -31,24 +33,68 @@ function OnPageLoad()
     $("#create-zip").button()
 			.click(OpenCreateZipDialog);
 
-    GetZips();    
+    $("#first-page").button()
+            .click(GotoFirstPage);
+    $("#prev-page").button()
+            .click(GotoPrevPage);
+    $("#next-page").button()
+            .click(GotoNextPage);
+    $("#last-page").button()
+            .click(GotoLastPage);
+
+    RefreshPage();    
 } 
 
 //Page Events:
-//***********************Get Zips (READ)***************************
-//Gets all the zips from service
-function GetZips() 
+function GotoFirstPage()
 {
-    $("#loadingZips").show();
-    OData.read(ZIPS_ODATA_SVC + '?t=' + new Date().getTime().toString(), GetZipsCallback);
+    curPage = 0;
+    RefreshPage();
 }
 
-//GetZips Success Callback
-function GetZipsCallback(data, request) 
+function GotoPrevPage()
+{
+    if (curPage > 0)
+        --curPage;
+    RefreshPage();
+}
+
+function GotoNextPage()
+{
+    if (curPage < Math.floor((totalEntries - 1) / entriesPerPage))
+        curPage++;
+    RefreshPage();
+}
+
+function GotoLastPage()
+{
+    curPage = Math.floor((totalEntries - 1) / entriesPerPage);
+    RefreshPage();
+}
+
+//***********************Get Zips and Refresh (READ)***************************
+//Gets entries from service and updates page
+function RefreshPage() 
+{
+    $("#loadingZips").show();
+    OData.read(ZIPS_ODATA_SVC + '/$count', GetCountCallback);
+}
+
+function GetCountCallback(data, request)
+{
+    totalEntries = parseInt(data);
+    if (totalEntries == 0)
+        totalEntries = 1;
+
+    OData.read(ZIPS_ODATA_SVC + '?$top=' + entriesPerPage + '&$skip=' + (curPage * entriesPerPage) + '&t=' + new Date().getTime().toString(), GetEntriesCallback);
+}
+
+//GetEntries Success Callback
+function GetEntriesCallback(data, request) 
 {
     $("#loadingZips").hide();
     $("#zips").find("tr:gt(0)").remove();
-    ApplyTemplate(data.results)
+    ApplyTemplate(data.results);
 }
 
 //***********************End: Get Zips***************************
@@ -117,7 +163,7 @@ function AddSuccessCallback(data, request)
 {
     $("#loading").hide('slow');
     $("#dialog-form").dialog("close");
-    GetZips();
+    RefreshPage();
 }
 
 //AddZip Error Callback
@@ -199,7 +245,7 @@ function UpdateZip(_id)
 function UpdateSuccessCallback(data, request) {
     $("#loading").hide('slow');
     $("#dialog-form").dialog("close");
-    GetZips();
+    RefreshPage();
 }
 
 //UpdateZip Error callback
@@ -254,7 +300,7 @@ function DeleteZip(_id)
 function DeleteSuccessCallback()
 {
     $dialog.dialog('close');
-    GetZips();
+    RefreshPage();
 }
 
 //DeleteZip Error callback
@@ -283,6 +329,16 @@ function ApplyTemplate(data)
 						"</tr>";
 
         $.tmpl(template, data).appendTo("#zips tbody");
+
+        if (curPage > 0)
+            $("#prev-page").removeAttr('disabled');
+        else
+            $("#prev-page").attr('disabled','disabled');
+
+        if (curPage < Math.floor((totalEntries - 1) / entriesPerPage))
+            $("#next-page").removeAttr('disabled');
+        else
+            $("#next-page").attr('disabled','disabled');
 }
 
 //Validation Helper, validates the zip edit form

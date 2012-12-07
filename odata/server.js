@@ -10,7 +10,7 @@ app.use(c.cookieParser());
 // TODO: This needs bcrypt which is currently failing to install on Windows: app.use(c.session({ secret: 'session key' }));
 
 // this number controls how many records are returned by default (useful in PowerPivot query)
-//$data.JayService.OData.Defaults.defaultResponseLimit = 1000;
+$data.JayService.OData.Defaults.defaultResponseLimit = 1000;
 
 app.use("/zipsdb", $data.JayService.OData.Utils.simpleBodyReader());
 app.use("/zipsdb", $data.JayService.createAdapter(zipsdb.Context, function (req, res) {
