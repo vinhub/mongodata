@@ -77,7 +77,7 @@ function GotoLastPage()
 function RefreshPage() 
 {
     $("#loadingZips").show();
-    OData.read(ZIPS_ODATA_SVC + '/$count', GetCountCallback);
+    OData.read(ZIPS_ODATA_SVC + '/$count?t=' + new Date().getTime().toString(), GetCountCallback);
 }
 
 function GetCountCallback(data, request)
@@ -85,6 +85,10 @@ function GetCountCallback(data, request)
     totalEntries = parseInt(data);
     if (totalEntries == 0)
         totalEntries = 1;
+    if (curPage < 0)
+        curPage = 0;
+    if (curPage > Math.floor((totalEntries - 1) / entriesPerPage))
+        curPage = Math.floor((totalEntries - 1) / entriesPerPage);
 
     OData.read(ZIPS_ODATA_SVC + '?$top=' + entriesPerPage + '&$skip=' + (curPage * entriesPerPage) + '&t=' + new Date().getTime().toString(), GetEntriesCallback);
 }
