@@ -167,6 +167,9 @@ function AddSuccessCallback(data, request)
 {
     $("#loading").hide('slow');
     $("#dialog-form").dialog("close");
+
+    ++totalEntries;
+    curPage = Math.floor((totalEntries - 1) / entriesPerPage);
     RefreshPage();
 }
 
@@ -304,6 +307,9 @@ function DeleteZip(_id)
 function DeleteSuccessCallback()
 {
     $dialog.dialog('close');
+
+    --totalEntries;
+    curPage = Math.floor((totalEntries - 1) / entriesPerPage);
     RefreshPage();
 }
 
