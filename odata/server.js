@@ -2,6 +2,7 @@ var c = require('express');
 require('jaydata');
 window.DOMParser=require('xmldom').DOMParser;
 require('q');
+var path = require('path');
 require('./model.js');
 var app = c();
 app.use(c.query());
@@ -16,6 +17,7 @@ app.use("/zipsdb", $data.JayService.OData.Utils.simpleBodyReader());
 app.use("/zipsdb", $data.JayService.createAdapter(zipsdb.Context, function (req, res) {
     return new zipsdb.Context({name: "mongoDB", databaseName:"zipsdb", address: "localhost", port: 27017 });
 }));
+app.use("/mongodataweb", c.static(path.normalize(__dirname + "\\..\\web")));
 app.use("/", c.static(__dirname));
 app.use(c.errorHandler());
 
