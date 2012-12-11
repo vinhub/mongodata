@@ -1,5 +1,5 @@
 ﻿//ODATA EntitySet URI
-var ZIPS_ODATA_SVC = "http://localhost:8088/zipsdb/zips";
+var ZIPS_ODATA_SVC;
 
 //Zip edit form Variables
 var _id = $("#_id"),
@@ -18,6 +18,8 @@ var _id = $("#_id"),
 
 function OnPageLoad() 
 {
+    ZIPS_ODATA_SVC = window.location.protocol + "//" + window.location.host + "/zipsdb/zips";
+
     $("#dialog:ui-dialog").dialog("destroy");
 
     $("#dialog-form").dialog({
