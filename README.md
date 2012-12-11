@@ -26,8 +26,6 @@ How to run the example (Windows):
 
 6. Check OData endpoint by navigating to http://localhost:8088/zipsdb/$metadata in your favorite browser. 
 
-7. Using IIS Manager, create a virtual directory "mongodataweb" pointing to the mongodata\web directory.
+7. Run the example app by navigating to: http://localhost:8088/mongodataweb/index.htm.
 
-8. Run the example app by navigating to: http://localhost/mongodataweb/index.htm.
-
-9. Enjoy!
+8. Enjoy!
