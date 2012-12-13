@@ -24,8 +24,10 @@ How to run the example (Windows):
     db.zips.find()
 </pre>
 
-6. Check OData endpoint by navigating to http://localhost:8088/zipsdb/$metadata in your favorite browser. 
+6. Start node (node server.js) or, if you have installed forever, then (forever -v server.js).
 
-7. Run the example app by navigating to: http://localhost:8088/mongodataweb/index.htm.
+7. Check OData endpoint by navigating to http://localhost:8088/zipsdb/$metadata in your favorite browser. 
 
-8. Enjoy!
+8. Run the example app by navigating to: http://localhost:8088/mongodataweb/
+
+9. Enjoy!
